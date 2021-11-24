@@ -10,6 +10,7 @@ public class CameraHandler : MonoBehaviour
      Transform myTransform;
     Vector3 cameraTransformPosition;     
     LayerMask ignoreLayers;
+    Vector3 cameraFollowVelocity = Vector3.zero;
 
     public static CameraHandler singleton;
 
@@ -17,11 +18,16 @@ public class CameraHandler : MonoBehaviour
     public float followSpeed = 0.1f;
     public float pivotSpeed = 0.03f;
 
+    float targetPosition;
     float defaultPosition;
     float lookAngle;
     float pivotAngle;
     public float minimumPivot = -35;
     public float maximumPivot = 35;
+
+    public float cameraSphereRadius = 0.2f;
+    public float cameraCollisionOffset = 0.2f;
+    public float minimumCollisionOffset = 0.2f;
 
     private void Awake()
     {
@@ -33,7 +39,7 @@ public class CameraHandler : MonoBehaviour
 
     public void FollowTarget(float delta)
     {
-        Vector3 targetPosition = Vector3.Lerp(myTransform.position, targetTransform.position, delta / followSpeed);
+        Vector3 targetPosition = Vector3.SmoothDamp(myTransform.position, targetTransform.position,ref cameraFollowVelocity, delta / followSpeed);
         myTransform.position = targetPosition;
     }
 
@@ -55,4 +61,9 @@ public class CameraHandler : MonoBehaviour
         cameraPivotTransform.localRotation = targetRotation;
     }
 
+
+    void HandleCameraCollision(float delta)
+    {
+        
+    }
 }
