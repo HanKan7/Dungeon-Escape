@@ -5,8 +5,9 @@ using UnityEngine;
 public class InputHandler : MonoBehaviour
 {
     public float horizontal, vertical, moveAmount, mouseX, mouseY;
-    public bool b_Input, rollFlag;
+    public bool b_Input, rollFlag, sprintFlag;
     public bool isInteracting;
+    public float rollInputTimer;
 
     PlayerControls inputActions;
     CameraHandler cameraHandler;
@@ -65,7 +66,17 @@ public class InputHandler : MonoBehaviour
         b_Input = inputActions.PlayerActions.Roll.phase == UnityEngine.InputSystem.InputActionPhase.Started;
         if (b_Input)
         {
-            rollFlag = true;
+            rollInputTimer += delta;
+            sprintFlag = true;
+        }
+        else
+        {
+            if(rollInputTimer > 0 && rollInputTimer < 0.5f)
+            {
+                sprintFlag = false;
+                rollFlag = true;
+            }
+            rollInputTimer = 0;
         }
     }
 }
