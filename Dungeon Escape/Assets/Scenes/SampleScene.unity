@@ -319,6 +319,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2816503538048186953, guid: 4a29864a376ad9245a2e5d8e20d08723, type: 3}
+      propertyPath: m_Height
+      value: 1.4056718
+      objectReference: {fileID: 0}
+    - target: {fileID: 2816503538048186953, guid: 4a29864a376ad9245a2e5d8e20d08723, type: 3}
+      propertyPath: m_Center.y
+      value: 1.0918282
+      objectReference: {fileID: 0}
     - target: {fileID: 2816503538048186958, guid: 4a29864a376ad9245a2e5d8e20d08723, type: 3}
       propertyPath: m_Name
       value: Main Player
