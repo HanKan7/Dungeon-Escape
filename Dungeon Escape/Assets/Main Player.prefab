@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 2816503538048186955}
   - component: {fileID: 2816503538048186954}
   - component: {fileID: 1889989490421456520}
+  - component: {fileID: 140905145778022147}
   m_Layer: 10
   m_Name: Main Player
   m_TagString: Untagged
@@ -47,9 +48,9 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.21
-  m_Height: 1.83
+  m_Height: 1.3677924
   m_Direction: 1
-  m_Center: {x: 0, y: 0.8796642, z: 0}
+  m_Center: {x: 0, y: 1.110768, z: 0}
 --- !u!54 &2816503538048186952
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -85,7 +86,8 @@ MonoBehaviour:
   mouseY: 0
   b_Input: 0
   rollFlag: 0
-  isInteracting: 0
+  sprintFlag: 0
+  rollInputTimer: 0
 --- !u!114 &2816503538048186954
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -98,12 +100,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a901a7308faf4d49a06a8744c48b8d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveDirection: {x: 0, y: 0, z: 0}
   myTransform: {fileID: 0}
   animatorHandler: {fileID: 0}
   rigidBody: {fileID: 0}
   normalCamera: {fileID: 0}
   movementSpeed: 5
   rotationSpeed: 10
+  sprintSpeed: 7
+  fallingSpeed: 0.01
+  minimumDistanceNeededToBeginFall: 1
+  groundDirectionRayDistance: 0.2
+  inAirTimer: 0
 --- !u!114 &1889989490421456520
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -116,6 +124,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc75c6e874ea0564ba4af129d40a26f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isInteracting: 0
+  isSprinting: 0
+  isGrounded: 0
+  isInAir: 0
+--- !u!114 &140905145778022147
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2816503538048186958}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc75c6e874ea0564ba4af129d40a26f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isInteracting: 0
+  isSprinting: 0
+  isGrounded: 0
+  isInAir: 0
 --- !u!1001 &4408087690853209502
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -208,6 +236,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anim: {fileID: 0}
-  inputHandler: {fileID: 0}
-  playerLocomotion: {fileID: 0}
   canRotate: 1

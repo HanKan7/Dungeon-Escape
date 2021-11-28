@@ -11,6 +11,7 @@ public class PlayerManager : MonoBehaviour
     public bool isInteracting;
     public bool isSprinting;
     public bool isGrounded;
+    public bool isInAir;
 
 
     CameraHandler cameraHandler;
@@ -48,13 +49,19 @@ public class PlayerManager : MonoBehaviour
         inputHandler.TickInput(delta);
         playerLocomotion.HandleMovement(delta);
         playerLocomotion.HandleRollingAndSpriting(delta);
+        playerLocomotion.HandleFalling(delta, playerLocomotion.moveDirection);
         
     }
 
     private void LateUpdate()
     {
+
         inputHandler.rollFlag = false;
         inputHandler.sprintFlag = false;
         isSprinting = inputHandler.b_Input;
+        if (isInAir)
+        {
+            playerLocomotion.inAirTimer = playerLocomotion.inAirTimer + Time.deltaTime;
+        }
     }
 }
