@@ -6,7 +6,6 @@ public class InputHandler : MonoBehaviour
 {
     public float horizontal, vertical, moveAmount, mouseX, mouseY;
     public bool b_Input, rollFlag, sprintFlag;
-    public bool isInteracting;
     public float rollInputTimer;
 
     PlayerControls inputActions;
@@ -18,16 +17,6 @@ public class InputHandler : MonoBehaviour
     private void Awake()
     {
         cameraHandler = CameraHandler.singleton;
-    }
-
-    private void FixedUpdate()
-    {
-        float delta = Time.fixedDeltaTime;
-        if(cameraHandler != null)
-        {
-            cameraHandler.FollowTarget(delta);
-            cameraHandler.HandleCameraRotation(delta, mouseX, mouseY);
-        }
     }
 
     public void OnEnable()

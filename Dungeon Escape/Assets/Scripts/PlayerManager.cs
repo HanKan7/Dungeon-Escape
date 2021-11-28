@@ -7,17 +7,54 @@ public class PlayerManager : MonoBehaviour
     InputHandler inputHandler;
     Animator anim;
 
+    [Header("Player Flags")]
+    public bool isInteracting;
+    public bool isSprinting;
+    public bool isGrounded;
+
+
+    CameraHandler cameraHandler;
+    PlayerLocomotion playerLocomotion;
+
+    private void Awake()
+    {
+        cameraHandler = CameraHandler.singleton;
+    }
 
     private void Start()
     {
         inputHandler = GetComponent<InputHandler>();
         anim = GetComponentInChildren<Animator>();
+        playerLocomotion = GetComponent<PlayerLocomotion>();
+    }
+
+    private void FixedUpdate()
+    {
+        float delta = Time.fixedDeltaTime;
+        if (cameraHandler != null)
+        {
+            cameraHandler.FollowTarget(delta);
+            cameraHandler.HandleCameraRotation(delta, inputHandler.mouseX, inputHandler.mouseY);
+        }
     }
 
     private void Update()
     {
-        inputHandler.isInteracting = anim.GetBool("isInteracting");
+        isInteracting = anim.GetBool("isInteracting");
+
+
+        float delta = Time.deltaTime;
+
+        inputHandler.TickInput(delta);
+        playerLocomotion.HandleMovement(delta);
+        playerLocomotion.HandleRollingAndSpriting(delta);
+        
+    }
+
+    private void LateUpdate()
+    {
         inputHandler.rollFlag = false;
         inputHandler.sprintFlag = false;
+        isSprinting = inputHandler.b_Input;
     }
 }
