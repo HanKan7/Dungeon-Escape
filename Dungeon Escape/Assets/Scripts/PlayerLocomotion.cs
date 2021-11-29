@@ -150,7 +150,7 @@ public class PlayerLocomotion : MonoBehaviour
         RaycastHit hit;
         Vector3 origin = myTransform.position;
         origin.y += groundDetectionRayStartPoint;
-        if(Physics.Raycast(origin, myTransform.forward, out hit, 0.4f))
+        if (Physics.Raycast(origin, myTransform.forward, out hit, 0.4f))
         {
             moveDirection = Vector3.zero;
         }
@@ -187,7 +187,7 @@ public class PlayerLocomotion : MonoBehaviour
                 }
                 else
                 {
-                    animatorHandler.PlayTargetAnimation("Locomotion", false);
+                    animatorHandler.PlayTargetAnimation("Empty", false);
                     inAirTimer = 0;
                 }
                 playerManager.isInAir = false;
@@ -201,9 +201,9 @@ public class PlayerLocomotion : MonoBehaviour
                 playerManager.isGrounded = false;
             }
 
-            if(playerManager.isInAir == false)
+            if (playerManager.isInAir == false)
             {
-                if(playerManager.isInteracting == false)
+                if (playerManager.isInteracting == false)
                 {
                     animatorHandler.PlayTargetAnimation("Fall", true);
                 }
@@ -213,12 +213,12 @@ public class PlayerLocomotion : MonoBehaviour
                 rigidBody.velocity = vel * (movementSpeed / 2);
                 playerManager.isInAir = true;
 
-            }        
+            }
         }
 
         if (playerManager.isGrounded)
         {
-            if(playerManager.isInteracting || inputHandler.moveAmount > 0)
+            if (playerManager.isInteracting || inputHandler.moveAmount > 0)
             {
                 myTransform.position = Vector3.Lerp(myTransform.position, targetPosition, Time.deltaTime);
             }
@@ -226,6 +226,15 @@ public class PlayerLocomotion : MonoBehaviour
             {
                 myTransform.position = targetPosition;
             }
+        }
+
+        if (playerManager.isInteracting || inputHandler.moveAmount > 0)
+        {
+            myTransform.position = Vector3.Lerp(myTransform.position, targetPosition, Time.deltaTime / 0.1f);
+        }
+        else
+        {
+            myTransform.position = targetPosition;
         }
     }
 
