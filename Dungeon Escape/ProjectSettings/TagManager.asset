@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - AI
+  - Pet
   layers:
   - Default
   - TransparentFX
@@ -21,7 +22,7 @@ TagManager:
   - Contact
   - Ragdoll
   - Weapon
-  - 
+  - Pet
   - 
   - 
   - 

@@ -58,7 +58,7 @@ public class DamageCollider : MonoBehaviour
             EmeraldAI.EmeraldAISystem eai = other.GetComponent<EmeraldAI.EmeraldAISystem>();
             if (eai != null)
             {
-                eai.Damage(10, EmeraldAI.EmeraldAISystem.TargetType.Player, transform.root, 100);
+                eai.Damage(20, EmeraldAI.EmeraldAISystem.TargetType.Player, transform.root, 100);
             }
         }
     }
