@@ -111,4 +111,14 @@ public class AnimatorHandler : MonoBehaviour
         deltaPosition.y = 0;
     }
 
+    public void EnableCombo()
+    {
+        anim.SetBool("canDoCombo", true);
+    }
+
+    public void DisableCombo()
+    {
+        anim.SetBool("canDoCombo", false);
+    }
+
 }

@@ -5,14 +5,22 @@ using UnityEngine;
 public class InputHandler : MonoBehaviour
 {
     public float horizontal, vertical, moveAmount, mouseX, mouseY;
-    public bool b_Input, rollFlag, sprintFlag;
+
+    public bool b_Input;
     public bool rb_Input;
     public bool rt_Input;
+
+    public bool rollFlag;
+    public bool sprintFlag;
+    public bool comboFlag;
+
+
     public float rollInputTimer;
 
     PlayerControls inputActions;
     PlayerAttacker playerAttacker;
     PlayerInventory playerInventory;
+    PlayerManager playerManager;
 
     Vector2 moveInput, cameraInput;
 
@@ -20,6 +28,7 @@ public class InputHandler : MonoBehaviour
     {
         playerAttacker = GetComponent<PlayerAttacker>();
         playerInventory = GetComponent<PlayerInventory>();
+        playerManager = GetComponent<PlayerManager>();
     }
 
     public void OnEnable()
@@ -80,7 +89,19 @@ public class InputHandler : MonoBehaviour
 
         if (rb_Input)
         {
-            playerAttacker.HandleLightAttack(playerInventory.rightWeapon);
+            if (playerManager.canDoCombo)
+            {
+                comboFlag = true;
+                playerAttacker.HandleWeaponCombo(playerInventory.rightWeapon);
+                comboFlag = false;
+            }
+            else
+            {
+                if (playerManager.isInteracting) return;
+                if (playerManager.canDoCombo) return;
+                playerAttacker.HandleLightAttack(playerInventory.rightWeapon);
+            }
+            //playerAttacker.HandleLightAttack(playerInventory.rightWeapon);
         }
         if (rt_Input)
         {
