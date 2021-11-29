@@ -12,6 +12,7 @@ public class PlayerManager : MonoBehaviour
     public bool isSprinting;
     public bool isGrounded;
     public bool isInAir;
+    public bool canDoCombo;
 
 
     CameraHandler cameraHandler;
@@ -42,6 +43,7 @@ public class PlayerManager : MonoBehaviour
     private void Update()
     {
         isInteracting = anim.GetBool("isInteracting");
+        canDoCombo = anim.GetBool("canDoCombo");
 
 
         float delta = Time.deltaTime;
