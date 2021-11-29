@@ -1,21 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using EmeraldAI;
 
 
 public class DamageCollider : MonoBehaviour
 {
-    Collider damageCollider;
+    BoxCollider damageCollider;
 
     int currentWeaponDamage = 40;
 
     private void Awake()
     {
-        damageCollider = GetComponent<Collider>();
+        damageCollider = GetComponent<BoxCollider>();
         damageCollider.gameObject.SetActive(true);
         damageCollider.isTrigger = true;
-        damageCollider.enabled = false;
+        //damageCollider.enabled = false;
     }
 
     public void EnableDamageCollider()
@@ -25,12 +25,13 @@ public class DamageCollider : MonoBehaviour
 
     public void DisableDamageCollider()
     {
-        damageCollider.enabled = false;
+        //damageCollider.enabled = false;
     }
 
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log("Hit " + other.name);
         if (other.tag == "Player")
         {
             PlayerStats pStats = other.GetComponent<PlayerStats>();
@@ -50,6 +51,15 @@ public class DamageCollider : MonoBehaviour
                 enemyStats.TakeDamage(currentWeaponDamage);
             }
         }
-    }
 
+        if (other.CompareTag("AI"))
+        {
+            Debug.Log("Hit enemy");
+            EmeraldAI.EmeraldAISystem eai = other.GetComponent<EmeraldAI.EmeraldAISystem>();
+            if (eai != null)
+            {
+                eai.Damage(10, EmeraldAI.EmeraldAISystem.TargetType.Player, transform.root, 100);
+            }
+        }
+    }
 }

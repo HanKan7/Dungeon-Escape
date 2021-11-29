@@ -54,20 +54,24 @@ public class WeaponSlotManager : MonoBehaviour
 
     public void OpenRightDamageCollider()
     {
+        //Debug.Log("Right O");
         rightHandDamageCollider.EnableDamageCollider();
     }
     public void OpenLeftDamageCollider()
     {
+        //Debug.Log("Left O");
         leftHandDamageCollider.EnableDamageCollider();
     }
 
     public void CloseRightDamageCollider()
     {
+        //Debug.Log("Right C");
         rightHandDamageCollider.DisableDamageCollider();
     }
 
     public void CloseLeftDamageCollider()
     {
+        //Debug.Log("Left C");
         leftHandDamageCollider.DisableDamageCollider();
     }
     #endregion
