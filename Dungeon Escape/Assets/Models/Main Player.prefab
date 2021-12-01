@@ -45,6 +45,8 @@ GameObject:
   - component: {fileID: 2816503538048186954}
   - component: {fileID: 140905145778022147}
   - component: {fileID: 690131069}
+  - component: {fileID: 391655166}
+  - component: {fileID: 391655173}
   m_Layer: 10
   m_Name: Main Player
   m_TagString: Untagged
@@ -78,9 +80,9 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.21
-  m_Height: 1.3677924
+  m_Height: 1.3225229
   m_Direction: 1
-  m_Center: {x: 0, y: 1.110768, z: 0}
+  m_Center: {x: 0, y: 1.1334027, z: 0}
 --- !u!54 &2816503538048186952
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -115,8 +117,15 @@ MonoBehaviour:
   mouseX: 0
   mouseY: 0
   b_Input: 0
+  rb_Input: 0
+  rt_Input: 0
+  up_Input: 0
+  down_Input: 0
+  left_Input: 0
+  right_Input: 0
   rollFlag: 0
   sprintFlag: 0
+  comboFlag: 0
   rollInputTimer: 0
 --- !u!114 &2816503538048186954
 MonoBehaviour:
@@ -138,8 +147,9 @@ MonoBehaviour:
   movementSpeed: 5
   rotationSpeed: 10
   sprintSpeed: 7
+  walkSpeed: 1
   fallingSpeed: 45
-  minimumDistanceNeededToBeginFall: 1
+  minimumDistanceNeededToBeginFall: 0.6
   groundDirectionRayDistance: 0.2
   inAirTimer: 0
 --- !u!114 &140905145778022147
@@ -158,6 +168,7 @@ MonoBehaviour:
   isSprinting: 0
   isGrounded: 0
   isInAir: 0
+  canDoCombo: 0
 --- !u!114 &690131069
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -172,6 +183,44 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rightWeapon: {fileID: 11400000, guid: 7bd65f43d59832e4d8c14a3e4aac1f8e, type: 2}
   leftWeapon: {fileID: 11400000, guid: 7bd65f43d59832e4d8c14a3e4aac1f8e, type: 2}
+  unarmedWeapon: {fileID: 11400000, guid: a9f8d33864776754caa2d6cd9aa95dcb, type: 2}
+  weaponsInRightHandSlots:
+  - {fileID: 11400000, guid: 7bd65f43d59832e4d8c14a3e4aac1f8e, type: 2}
+  - {fileID: 11400000, guid: cf2349b9d4fa99848a9fafd6f0853574, type: 2}
+  weaponsInLeftHandSlots:
+  - {fileID: 11400000, guid: 7bd65f43d59832e4d8c14a3e4aac1f8e, type: 2}
+  - {fileID: 11400000, guid: cf2349b9d4fa99848a9fafd6f0853574, type: 2}
+  currentRightWeaponIndex: -1
+  currentLeftWeaponIndex: -1
+--- !u!114 &391655166
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2816503538048186958}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a6a275698f18e348a0525ba22046037, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthLevel: 10
+  maxHealth: 0
+  currentHealth: 0
+  healthBar: {fileID: 0}
+--- !u!114 &391655173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2816503538048186958}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d298499faf945234ba1ea781e901f801, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lastAttack: 
 --- !u!1001 &4408087690853209502
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -271,6 +320,18 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4087614351913582, guid: d47d5ac7dfc19da419169847c76d638b, type: 3}
   m_PrefabInstance: {fileID: 4408087690853209502}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &11601911
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4407062063572602008}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d7282872c20dc94fb33baa64df03cf6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &4408087690249370396
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -285,18 +346,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   anim: {fileID: 0}
   canRotate: 1
---- !u!114 &11601911
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4407062063572602008}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d7282872c20dc94fb33baa64df03cf6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1983983526
 MonoBehaviour:
   m_ObjectHideFlags: 0
