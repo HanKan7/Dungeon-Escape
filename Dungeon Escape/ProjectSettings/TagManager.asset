@@ -6,11 +6,12 @@ TagManager:
   tags:
   - AI
   - Pet
+  - Enemy
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - PostProc
   - Water
   - UI
   - 
