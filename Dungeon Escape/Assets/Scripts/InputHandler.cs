@@ -13,6 +13,8 @@ public class InputHandler : MonoBehaviour
     public bool down_Input;
     public bool left_Input;
     public bool right_Input;
+    public bool f_input;
+
 
     public bool rollFlag;
     public bool sprintFlag;
@@ -57,6 +59,7 @@ public class InputHandler : MonoBehaviour
         HandleRollInput(delta);
         HandleAttackInput(delta);
         HandleQuickSlotInput();
+        HandleInteractableInput();
     }
 
     void MoveInput(float delta)
@@ -126,5 +129,10 @@ public class InputHandler : MonoBehaviour
         {
             playerInventory.ChangeLeftWeapon();
         }
+    }
+
+    void HandleInteractableInput()
+    {
+        inputActions.PlayerActions.F.performed += i => f_input = true;
     }
 }

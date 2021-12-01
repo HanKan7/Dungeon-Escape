@@ -5,7 +5,9 @@ using UnityEngine;
 public class PlayerManager : MonoBehaviour
 {
     InputHandler inputHandler;
+    PlayerStats playerStats;
     Animator anim;
+    public LayerMask interactableLayer;
 
     [Header("Player Flags")]
     public bool isInteracting;
@@ -28,6 +30,7 @@ public class PlayerManager : MonoBehaviour
         inputHandler = GetComponent<InputHandler>();
         anim = GetComponentInChildren<Animator>();
         playerLocomotion = GetComponent<PlayerLocomotion>();
+        playerStats = GetComponent<PlayerStats>();
     }
 
     private void FixedUpdate()
@@ -51,6 +54,9 @@ public class PlayerManager : MonoBehaviour
         inputHandler.TickInput(delta);
         playerLocomotion.HandleMovement(delta);
         playerLocomotion.HandleRollingAndSpriting(delta);
+        if (playerStats.currentHealth <= 0) return;
+        //if (isInteracting) return;
+        CheckForInteractable();
         playerLocomotion.HandleFalling(delta, playerLocomotion.moveDirection);
         
     }
@@ -67,10 +73,61 @@ public class PlayerManager : MonoBehaviour
         inputHandler.down_Input = false;
         inputHandler.left_Input = false;
         inputHandler.right_Input = false;
+        inputHandler.f_input = false;
         
         if (isInAir)
         {
             playerLocomotion.inAirTimer = playerLocomotion.inAirTimer + Time.deltaTime;
         }
+    }
+
+    public void CheckForInteractable()
+    {
+        RaycastHit hit;
+        
+        if(Physics.SphereCast(transform.position, 0.3f, transform.forward, out hit, 1f, cameraHandler.ignoreLayers))
+        {
+
+            if (hit.collider.tag == "Interactable")
+            {
+                Debug.Log("Int");
+                Interactable interactableObject = hit.collider.GetComponent<Interactable>();
+
+                if(interactableObject != null)
+                {
+                    string interactableText = interactableObject.interactableText; //Set the UI Text to interactable obj text // Enable UI pop up
+
+                    if (inputHandler.f_input)
+                    {
+                        hit.collider.GetComponent<Interactable>().Interact(this);
+                    }
+                }
+            }
+        }
+        Debug.DrawRay(transform.position + new Vector3(0,1,0), transform.forward, Color.red);
+        if(Physics.Raycast(transform.position + new Vector3(0, 1, 0), transform.forward, out hit))
+        {
+            if (hit.collider.tag == "Interactable")
+            {
+                Interactable interactableObject = hit.collider.GetComponent<Interactable>();
+
+                if (interactableObject != null)
+                {
+                    string interactableText = interactableObject.interactableText; //Set the UI Text to interactable obj text // Enable UI pop up
+
+                    if (inputHandler.f_input)
+                    {
+                        hit.collider.GetComponent<Interactable>().Interact(this);
+                    }
+                }
+            }
+        }
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        // Draw a yellow sphere at the transform's position
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawSphere(transform.position, 1f);
     }
 }

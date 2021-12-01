@@ -2,7 +2,7 @@
     "name": "PlayerControls",
     "maps": [
         {
-            "name": "Player Movement",
+            "name": "PlayerMovement",
             "id": "bdbf05ad-4ac9-4193-92bc-37d1f5094db4",
             "actions": [
                 {
@@ -103,7 +103,7 @@
             ]
         },
         {
-            "name": "Player Actions",
+            "name": "PlayerActions",
             "id": "5fef7e46-2d96-41e0-aeb6-d2a1a5710132",
             "actions": [
                 {
@@ -126,6 +126,14 @@
                     "name": "RT",
                     "type": "Button",
                     "id": "44471ddf-3e01-45dc-83aa-dacda3589cd4",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "F",
+                    "type": "Button",
+                    "id": "6b421ace-fd63-4b78-833d-65184c113a4e",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
@@ -195,6 +203,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "RT",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "594b363f-9ff4-4ce1-b171-36a32fdcc22b",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "F",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -15,7 +15,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     ""name"": ""PlayerControls"",
     ""maps"": [
         {
-            ""name"": ""Player Movement"",
+            ""name"": ""PlayerMovement"",
             ""id"": ""bdbf05ad-4ac9-4193-92bc-37d1f5094db4"",
             ""actions"": [
                 {
@@ -116,7 +116,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
             ]
         },
         {
-            ""name"": ""Player Actions"",
+            ""name"": ""PlayerActions"",
             ""id"": ""5fef7e46-2d96-41e0-aeb6-d2a1a5710132"",
             ""actions"": [
                 {
@@ -139,6 +139,14 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""name"": ""RT"",
                     ""type"": ""Button"",
                     ""id"": ""44471ddf-3e01-45dc-83aa-dacda3589cd4"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""F"",
+                    ""type"": ""Button"",
+                    ""id"": ""6b421ace-fd63-4b78-833d-65184c113a4e"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
@@ -208,6 +216,17 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""RT"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""594b363f-9ff4-4ce1-b171-36a32fdcc22b"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""F"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -300,15 +319,16 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     ],
     ""controlSchemes"": []
 }");
-        // Player Movement
-        m_PlayerMovement = asset.FindActionMap("Player Movement", throwIfNotFound: true);
+        // PlayerMovement
+        m_PlayerMovement = asset.FindActionMap("PlayerMovement", throwIfNotFound: true);
         m_PlayerMovement_Movement = m_PlayerMovement.FindAction("Movement", throwIfNotFound: true);
         m_PlayerMovement_Camera = m_PlayerMovement.FindAction("Camera", throwIfNotFound: true);
-        // Player Actions
-        m_PlayerActions = asset.FindActionMap("Player Actions", throwIfNotFound: true);
+        // PlayerActions
+        m_PlayerActions = asset.FindActionMap("PlayerActions", throwIfNotFound: true);
         m_PlayerActions_Roll = m_PlayerActions.FindAction("Roll", throwIfNotFound: true);
         m_PlayerActions_RB = m_PlayerActions.FindAction("RB", throwIfNotFound: true);
         m_PlayerActions_RT = m_PlayerActions.FindAction("RT", throwIfNotFound: true);
+        m_PlayerActions_F = m_PlayerActions.FindAction("F", throwIfNotFound: true);
         // PlayerInventory
         m_PlayerInventory = asset.FindActionMap("PlayerInventory", throwIfNotFound: true);
         m_PlayerInventory_UpArrow = m_PlayerInventory.FindAction("UpArrow", throwIfNotFound: true);
@@ -361,7 +381,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         asset.Disable();
     }
 
-    // Player Movement
+    // PlayerMovement
     private readonly InputActionMap m_PlayerMovement;
     private IPlayerMovementActions m_PlayerMovementActionsCallbackInterface;
     private readonly InputAction m_PlayerMovement_Movement;
@@ -402,12 +422,13 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     }
     public PlayerMovementActions @PlayerMovement => new PlayerMovementActions(this);
 
-    // Player Actions
+    // PlayerActions
     private readonly InputActionMap m_PlayerActions;
     private IPlayerActionsActions m_PlayerActionsActionsCallbackInterface;
     private readonly InputAction m_PlayerActions_Roll;
     private readonly InputAction m_PlayerActions_RB;
     private readonly InputAction m_PlayerActions_RT;
+    private readonly InputAction m_PlayerActions_F;
     public struct PlayerActionsActions
     {
         private @PlayerControls m_Wrapper;
@@ -415,6 +436,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         public InputAction @Roll => m_Wrapper.m_PlayerActions_Roll;
         public InputAction @RB => m_Wrapper.m_PlayerActions_RB;
         public InputAction @RT => m_Wrapper.m_PlayerActions_RT;
+        public InputAction @F => m_Wrapper.m_PlayerActions_F;
         public InputActionMap Get() { return m_Wrapper.m_PlayerActions; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -433,6 +455,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @RT.started -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnRT;
                 @RT.performed -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnRT;
                 @RT.canceled -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnRT;
+                @F.started -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnF;
+                @F.performed -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnF;
+                @F.canceled -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnF;
             }
             m_Wrapper.m_PlayerActionsActionsCallbackInterface = instance;
             if (instance != null)
@@ -446,6 +471,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @RT.started += instance.OnRT;
                 @RT.performed += instance.OnRT;
                 @RT.canceled += instance.OnRT;
+                @F.started += instance.OnF;
+                @F.performed += instance.OnF;
+                @F.canceled += instance.OnF;
             }
         }
     }
@@ -517,6 +545,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         void OnRoll(InputAction.CallbackContext context);
         void OnRB(InputAction.CallbackContext context);
         void OnRT(InputAction.CallbackContext context);
+        void OnF(InputAction.CallbackContext context);
     }
     public interface IPlayerInventoryActions
     {

@@ -139,7 +139,7 @@ public class PlayerLocomotion : MonoBehaviour
             }
             else
             {
-                animatorHandler.PlayTargetAnimation("Step Back", true);
+                animatorHandler.PlayTargetAnimation("StepBack", true);
             }
         }
     }
