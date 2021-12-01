@@ -9,6 +9,10 @@ public class PlayerManager : MonoBehaviour
     Animator anim;
     public LayerMask interactableLayer;
 
+    public InteractableUI interactableUI;
+    public GameObject interactableUiGameObject;
+    public GameObject itemInteractableGameObject;
+
     [Header("Player Flags")]
     public bool isInteracting;
     public bool isSprinting;
@@ -31,6 +35,7 @@ public class PlayerManager : MonoBehaviour
         anim = GetComponentInChildren<Animator>();
         playerLocomotion = GetComponent<PlayerLocomotion>();
         playerStats = GetComponent<PlayerStats>();
+        interactableUI = FindObjectOfType<InteractableUI>();
     }
 
     private void FixedUpdate()
@@ -85,27 +90,27 @@ public class PlayerManager : MonoBehaviour
     {
         RaycastHit hit;
         
-        if(Physics.SphereCast(transform.position, 0.3f, transform.forward, out hit, 1f, cameraHandler.ignoreLayers))
-        {
+        //if(Physics.SphereCast(transform.position, 0.3f, transform.forward, out hit, 1f, cameraHandler.ignoreLayers))
+        //{
 
-            if (hit.collider.tag == "Interactable")
-            {
-                Debug.Log("Int");
-                Interactable interactableObject = hit.collider.GetComponent<Interactable>();
+        //    if (hit.collider.tag == "Interactable")
+        //    {
+        //        Debug.Log("Int");
+        //        Interactable interactableObject = hit.collider.GetComponent<Interactable>();
 
-                if(interactableObject != null)
-                {
-                    string interactableText = interactableObject.interactableText; //Set the UI Text to interactable obj text // Enable UI pop up
+        //        if(interactableObject != null)
+        //        {
+        //            string interactableText = interactableObject.interactableText; //Set the UI Text to interactable obj text // Enable UI pop up
 
-                    if (inputHandler.f_input)
-                    {
-                        hit.collider.GetComponent<Interactable>().Interact(this);
-                    }
-                }
-            }
-        }
+        //            if (inputHandler.f_input)
+        //            {
+        //                hit.collider.GetComponent<Interactable>().Interact(this);
+        //            }
+        //        }
+        //    }
+        //}
         Debug.DrawRay(transform.position + new Vector3(0,1,0), transform.forward, Color.red);
-        if(Physics.Raycast(transform.position + new Vector3(0, 1, 0), transform.forward, out hit))
+        if(Physics.Raycast(transform.position + new Vector3(0, 1, 0), transform.forward, out hit, 1f, interactableLayer))
         {
             if (hit.collider.tag == "Interactable")
             {
@@ -114,6 +119,8 @@ public class PlayerManager : MonoBehaviour
                 if (interactableObject != null)
                 {
                     string interactableText = interactableObject.interactableText; //Set the UI Text to interactable obj text // Enable UI pop up
+                    interactableUI.interactableText.text = interactableText + "/ Press F to pick it up";
+                    interactableUiGameObject.SetActive(true);
 
                     if (inputHandler.f_input)
                     {
@@ -122,12 +129,23 @@ public class PlayerManager : MonoBehaviour
                 }
             }
         }
+        else
+        {
+            if(interactableUiGameObject != null)
+            {
+                interactableUiGameObject.SetActive(false);
+            }
+            if(itemInteractableGameObject != null && inputHandler.f_input)
+            {
+                itemInteractableGameObject.SetActive(false);
+            }
+        }
     }
 
     void OnDrawGizmosSelected()
     {
         // Draw a yellow sphere at the transform's position
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawSphere(transform.position, 1f);
+        //Gizmos.color = Color.yellow;
+        //Gizmos.DrawSphere(transform.position, 1f);
     }
 }
