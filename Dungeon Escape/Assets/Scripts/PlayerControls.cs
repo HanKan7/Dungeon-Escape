@@ -212,6 +212,90 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""PlayerInventory"",
+            ""id"": ""5529c920-9adb-440a-ae99-5408c9e47c95"",
+            ""actions"": [
+                {
+                    ""name"": ""UpArrow"",
+                    ""type"": ""Button"",
+                    ""id"": ""82f9d881-acd1-4ddf-891f-780bf902dd98"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""DownArrow"",
+                    ""type"": ""Button"",
+                    ""id"": ""cf3b0d0f-e09b-48a7-8c50-39114e09e236"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""LeftArrow"",
+                    ""type"": ""Button"",
+                    ""id"": ""b2042e00-1f04-465f-a27f-b3ad3b6e531e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""RightArrow"",
+                    ""type"": ""Button"",
+                    ""id"": ""055fb00c-041a-4a0a-af06-35a5e46bec30"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""823c37e9-d82b-4365-bb4a-464e082cb201"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""UpArrow"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ed32958e-b38b-494c-9e5c-6fdeccc88155"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DownArrow"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7dcb659b-243a-4053-8574-8e1115d94731"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LeftArrow"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3a211b85-bf89-4441-9fa2-b8c46aec9fda"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RightArrow"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -225,6 +309,12 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         m_PlayerActions_Roll = m_PlayerActions.FindAction("Roll", throwIfNotFound: true);
         m_PlayerActions_RB = m_PlayerActions.FindAction("RB", throwIfNotFound: true);
         m_PlayerActions_RT = m_PlayerActions.FindAction("RT", throwIfNotFound: true);
+        // PlayerInventory
+        m_PlayerInventory = asset.FindActionMap("PlayerInventory", throwIfNotFound: true);
+        m_PlayerInventory_UpArrow = m_PlayerInventory.FindAction("UpArrow", throwIfNotFound: true);
+        m_PlayerInventory_DownArrow = m_PlayerInventory.FindAction("DownArrow", throwIfNotFound: true);
+        m_PlayerInventory_LeftArrow = m_PlayerInventory.FindAction("LeftArrow", throwIfNotFound: true);
+        m_PlayerInventory_RightArrow = m_PlayerInventory.FindAction("RightArrow", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -360,6 +450,63 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         }
     }
     public PlayerActionsActions @PlayerActions => new PlayerActionsActions(this);
+
+    // PlayerInventory
+    private readonly InputActionMap m_PlayerInventory;
+    private IPlayerInventoryActions m_PlayerInventoryActionsCallbackInterface;
+    private readonly InputAction m_PlayerInventory_UpArrow;
+    private readonly InputAction m_PlayerInventory_DownArrow;
+    private readonly InputAction m_PlayerInventory_LeftArrow;
+    private readonly InputAction m_PlayerInventory_RightArrow;
+    public struct PlayerInventoryActions
+    {
+        private @PlayerControls m_Wrapper;
+        public PlayerInventoryActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @UpArrow => m_Wrapper.m_PlayerInventory_UpArrow;
+        public InputAction @DownArrow => m_Wrapper.m_PlayerInventory_DownArrow;
+        public InputAction @LeftArrow => m_Wrapper.m_PlayerInventory_LeftArrow;
+        public InputAction @RightArrow => m_Wrapper.m_PlayerInventory_RightArrow;
+        public InputActionMap Get() { return m_Wrapper.m_PlayerInventory; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(PlayerInventoryActions set) { return set.Get(); }
+        public void SetCallbacks(IPlayerInventoryActions instance)
+        {
+            if (m_Wrapper.m_PlayerInventoryActionsCallbackInterface != null)
+            {
+                @UpArrow.started -= m_Wrapper.m_PlayerInventoryActionsCallbackInterface.OnUpArrow;
+                @UpArrow.performed -= m_Wrapper.m_PlayerInventoryActionsCallbackInterface.OnUpArrow;
+                @UpArrow.canceled -= m_Wrapper.m_PlayerInventoryActionsCallbackInterface.OnUpArrow;
+                @DownArrow.started -= m_Wrapper.m_PlayerInventoryActionsCallbackInterface.OnDownArrow;
+                @DownArrow.performed -= m_Wrapper.m_PlayerInventoryActionsCallbackInterface.OnDownArrow;
+                @DownArrow.canceled -= m_Wrapper.m_PlayerInventoryActionsCallbackInterface.OnDownArrow;
+                @LeftArrow.started -= m_Wrapper.m_PlayerInventoryActionsCallbackInterface.OnLeftArrow;
+                @LeftArrow.performed -= m_Wrapper.m_PlayerInventoryActionsCallbackInterface.OnLeftArrow;
+                @LeftArrow.canceled -= m_Wrapper.m_PlayerInventoryActionsCallbackInterface.OnLeftArrow;
+                @RightArrow.started -= m_Wrapper.m_PlayerInventoryActionsCallbackInterface.OnRightArrow;
+                @RightArrow.performed -= m_Wrapper.m_PlayerInventoryActionsCallbackInterface.OnRightArrow;
+                @RightArrow.canceled -= m_Wrapper.m_PlayerInventoryActionsCallbackInterface.OnRightArrow;
+            }
+            m_Wrapper.m_PlayerInventoryActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @UpArrow.started += instance.OnUpArrow;
+                @UpArrow.performed += instance.OnUpArrow;
+                @UpArrow.canceled += instance.OnUpArrow;
+                @DownArrow.started += instance.OnDownArrow;
+                @DownArrow.performed += instance.OnDownArrow;
+                @DownArrow.canceled += instance.OnDownArrow;
+                @LeftArrow.started += instance.OnLeftArrow;
+                @LeftArrow.performed += instance.OnLeftArrow;
+                @LeftArrow.canceled += instance.OnLeftArrow;
+                @RightArrow.started += instance.OnRightArrow;
+                @RightArrow.performed += instance.OnRightArrow;
+                @RightArrow.canceled += instance.OnRightArrow;
+            }
+        }
+    }
+    public PlayerInventoryActions @PlayerInventory => new PlayerInventoryActions(this);
     public interface IPlayerMovementActions
     {
         void OnMovement(InputAction.CallbackContext context);
@@ -370,5 +517,12 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         void OnRoll(InputAction.CallbackContext context);
         void OnRB(InputAction.CallbackContext context);
         void OnRT(InputAction.CallbackContext context);
+    }
+    public interface IPlayerInventoryActions
+    {
+        void OnUpArrow(InputAction.CallbackContext context);
+        void OnDownArrow(InputAction.CallbackContext context);
+        void OnLeftArrow(InputAction.CallbackContext context);
+        void OnRightArrow(InputAction.CallbackContext context);
     }
 }

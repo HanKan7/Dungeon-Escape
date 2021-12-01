@@ -11,10 +11,13 @@ public class WeaponSlotManager : MonoBehaviour
 
     Animator anim;
 
+    QuickSlotsUI quickSlotsUI;
+
     private void Awake()
     {
         WeaponHolderSlot[] weaponHolderSlots = GetComponentsInChildren<WeaponHolderSlot>();
         anim = GetComponent<Animator>();
+        quickSlotsUI = FindObjectOfType<QuickSlotsUI>();
 
         foreach (WeaponHolderSlot weaponSlot in weaponHolderSlots)
         {
@@ -35,6 +38,7 @@ public class WeaponSlotManager : MonoBehaviour
         {
             leftHandSlot.LoadWeaponModel(weaponItem);
             LoadLeftWeaponDamageCollider();
+            quickSlotsUI.UpdateWeaponQuickSlotsUI(true, weaponItem);
             
             if (weaponItem != null)
             {
@@ -50,6 +54,7 @@ public class WeaponSlotManager : MonoBehaviour
         {
             rightHandSlot.LoadWeaponModel(weaponItem);
             LoadRightWeaponDamageCollider();
+            quickSlotsUI.UpdateWeaponQuickSlotsUI(false, weaponItem);
 
             if (weaponItem != null)
             {
