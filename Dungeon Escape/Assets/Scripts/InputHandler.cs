@@ -14,6 +14,7 @@ public class InputHandler : MonoBehaviour
     public bool left_Input;
     public bool right_Input;
     public bool f_input;
+    public bool jump_input;
 
 
     public bool rollFlag;
@@ -60,6 +61,7 @@ public class InputHandler : MonoBehaviour
         HandleAttackInput(delta);
         HandleQuickSlotInput();
         HandleInteractableInput();
+        HandleJumpInput();
     }
 
     void MoveInput(float delta)
@@ -134,5 +136,10 @@ public class InputHandler : MonoBehaviour
     void HandleInteractableInput()
     {
         inputActions.PlayerActions.F.performed += i => f_input = true;
+    }
+
+    void HandleJumpInput()
+    {
+        inputActions.PlayerActions.Jump.performed += i => jump_input = true;
     }
 }

@@ -14,6 +14,7 @@ public class PlayerLocomotion : MonoBehaviour
     public Transform myTransform;
     [HideInInspector]
     public AnimatorHandler animatorHandler;
+    public CapsuleCollider capsuleCollider;
 
 
     public new Rigidbody rigidBody;
@@ -25,6 +26,7 @@ public class PlayerLocomotion : MonoBehaviour
     [SerializeField] float sprintSpeed = 7f;
     [SerializeField] float walkSpeed = 1f;
     [SerializeField] float fallingSpeed = 45f;
+    [SerializeField] float jumpSpeed = 15f;
 
 
     [Header("Ground and Air Detection Stats")]
@@ -42,6 +44,7 @@ public class PlayerLocomotion : MonoBehaviour
         inputHandler = GetComponent<InputHandler>();
         cameraObject = Camera.main.transform;
         animatorHandler = GetComponentInChildren<AnimatorHandler>();
+        capsuleCollider = GetComponentInChildren<CapsuleCollider>();
         myTransform = transform;
         animatorHandler.Initialize();
         playerManager.isGrounded = true;
@@ -146,6 +149,7 @@ public class PlayerLocomotion : MonoBehaviour
 
     public void HandleFalling(float delta, Vector3 moveDirection)
     {
+        capsuleCollider.center -= new Vector3(0, 1f, 0);
         playerManager.isGrounded = false;
         RaycastHit hit;
         Vector3 origin = myTransform.position;
@@ -235,6 +239,30 @@ public class PlayerLocomotion : MonoBehaviour
         else
         {
             myTransform.position = targetPosition;
+        }
+    }
+
+    public void HandleJumping()
+    {
+        if (playerManager.isInteracting) return;
+        if (inputHandler.jump_input)
+        {
+            //if(inputHandler.moveAmount > 0)
+            {
+                moveDirection = cameraObject.forward * inputHandler.vertical;
+                moveDirection += cameraObject.right * inputHandler.horizontal;
+                animatorHandler.PlayTargetAnimation("Jump", true);
+                moveDirection.y = 0;
+                Quaternion jumpRotation = Quaternion.LookRotation(moveDirection);
+                myTransform.rotation = jumpRotation;
+
+
+                //moveDirection.Normalize();
+                //moveDirection *= jumpSpeed;
+                GetComponent<Rigidbody>().AddForce(new Vector3(0, jumpSpeed * 100, 0) * Time.deltaTime);
+                capsuleCollider.center = new Vector3(0, 2f, 0);
+                //transform.position = Vector3.Lerp(transform.position, transform.position + new Vector3(0, 2f, 0), 0.07f);
+            }
         }
     }
 
