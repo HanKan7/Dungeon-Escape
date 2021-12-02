@@ -17,5 +17,10 @@ namespace Aniruddha.AI.Combat
         {
             collider.enabled = false;
         }
+        public DoorManager dm;
+        public void DefeatedKnight()
+        {
+            dm.DoorOpen();
+        }
     }
 }

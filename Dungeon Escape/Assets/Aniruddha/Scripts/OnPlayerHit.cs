@@ -8,6 +8,14 @@ namespace Aniruddha.AI.Combat
     public class OnPlayerHit : MonoBehaviour
     {
         public PlayerStats playerStats;
+        public AudioClip hitSound;
+
+        private AudioSource audioSource;
+
+        private void Awake()
+        {
+            audioSource = GetComponent<AudioSource>();
+        }
 
         private void OnTriggerEnter(Collider other)
         {
@@ -15,6 +23,10 @@ namespace Aniruddha.AI.Combat
             if(other.transform.root.CompareTag("AI"))
             {
                 playerStats.TakeDamage(20);
+                if(audioSource)
+                {
+                    audioSource.PlayOneShot(hitSound);
+                }
             }
         }
     }

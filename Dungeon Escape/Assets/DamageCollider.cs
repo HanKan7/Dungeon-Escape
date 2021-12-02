@@ -10,12 +10,17 @@ public class DamageCollider : MonoBehaviour
 
     int currentWeaponDamage = 40;
 
+    public AudioClip hitSound;
+    private AudioSource audioSource;
+    public InputHandler inputHandler;
+
     private void Awake()
     {
         damageCollider = GetComponent<BoxCollider>();
         damageCollider.gameObject.SetActive(true);
         damageCollider.isTrigger = true;
         damageCollider.enabled = false;
+        audioSource = GetComponent<AudioSource>();
     }
 
     public void EnableDamageCollider()
@@ -59,6 +64,7 @@ public class DamageCollider : MonoBehaviour
             if (eai != null)
             {
                 eai.Damage(20, EmeraldAI.EmeraldAISystem.TargetType.Player, transform.root, 100);
+                audioSource.PlayOneShot(hitSound);
             }
         }
     }

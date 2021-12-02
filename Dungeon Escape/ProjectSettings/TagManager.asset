@@ -9,6 +9,7 @@ TagManager:
   - Enemy
   - Interactable
   - PetFollow
+  - Key
   layers:
   - Default
   - TransparentFX
