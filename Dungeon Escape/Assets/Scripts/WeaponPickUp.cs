@@ -27,6 +27,7 @@ public class WeaponPickUp : Interactable
 
         playerLocomotion.rigidBody.velocity = Vector3.zero;     //Stops the player from moving while picking up item
         animatorHandler.PlayTargetAnimation("Picking", true);
+        //if(interactableText != "Key")
         playerInventory.weaponsInventory.Add(weapon);
         playerManager.itemInteractableGameObject.GetComponentInChildren<TMP_Text>().text = weapon.itemName;
         playerManager.itemInteractableGameObject.SetActive(true);

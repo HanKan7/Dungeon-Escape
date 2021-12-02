@@ -7,13 +7,21 @@ public class UIManager : MonoBehaviour
 {
     public PlayerInventory playerInventory;
 
+    [Header("UI Windows")]
+    public GameObject hudWindow;
     public GameObject selectWindow;
+    public GameObject weaponInventoryWindow;
 
     [Header("Weapons Inventory")]
     public GameObject weaponInventorySlotPrefab;
     WeaponInventorySlot[] weaponsInvSlots;
     public Transform weaponInvSlotsParent;
 
+
+    private void Start()
+    {
+        weaponsInvSlots = weaponInvSlotsParent.GetComponentsInChildren<WeaponInventorySlot>();
+    }
     public void UpdateUI()
     {
         #region weaponsInvSlots
@@ -45,5 +53,10 @@ public class UIManager : MonoBehaviour
     public void CloseSelectWindow()
     {
         selectWindow.SetActive(false);
+    }
+
+    public void CloseAllInventoryWindows()
+    {
+        weaponInventoryWindow.SetActive(false);
     }
 }

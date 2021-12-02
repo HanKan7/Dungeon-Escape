@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class QuickSlotsUI : MonoBehaviour
 {
-    public Image leftWeaponIcon, rightWeaponIcon;
+    public Image leftWeaponIcon, rightWeaponIcon, healthIcon;
 
     public void UpdateWeaponQuickSlotsUI(bool isLeft, WeaponItem weapon)
     {
