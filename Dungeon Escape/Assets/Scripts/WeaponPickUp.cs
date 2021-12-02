@@ -27,9 +27,16 @@ public class WeaponPickUp : Interactable
 
         playerLocomotion.rigidBody.velocity = Vector3.zero;     //Stops the player from moving while picking up item
         animatorHandler.PlayTargetAnimation("Picking", true);
-        //if(interactableText != "Key")
-        playerInventory.weaponsInventory.Add(weapon);
-        playerManager.itemInteractableGameObject.GetComponentInChildren<TMP_Text>().text = weapon.itemName;
+        if(interactableText == "Sword" || interactableText == "Gold Sword" || interactableText == "Key")
+        {
+            playerInventory.weaponsInventory.Add(weapon);
+        }
+        else if(interactableText == "Fish" || interactableText == "Ham")
+        {
+            playerInventory.itemInventory.Add(weapon);
+            playerInventory.itemCount++;
+        }
+        playerManager.itemInteractableGameObject.GetComponentInChildren<TMP_Text>().text = "Last Picked Item: " + weapon.itemName;
         playerManager.itemInteractableGameObject.SetActive(true);
         Destroy(gameObject);
     }

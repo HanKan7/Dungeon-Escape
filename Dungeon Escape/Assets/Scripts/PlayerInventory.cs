@@ -6,7 +6,7 @@ public class PlayerInventory : MonoBehaviour
 {
 
     WeaponSlotManager weaponSlotManager;
-    public WeaponItem rightWeapon, leftWeapon, unarmedWeapon;
+    public WeaponItem rightWeapon, leftWeapon, unarmedWeapon, food;
     public List<WeaponItem> weaponsInRightHandSlots;
     public List<WeaponItem> weaponsInLeftHandSlots;
     public List<WeaponItem> items;
@@ -14,6 +14,7 @@ public class PlayerInventory : MonoBehaviour
     public int currentRightWeaponIndex = -1;
     public int currentLeftWeaponIndex = -1;
     public int currentItemIndex = -1;
+    public int itemCount = 0;
 
     public List<WeaponItem> weaponsInventory;
     public List<WeaponItem> itemInventory;
@@ -43,25 +44,27 @@ public class PlayerInventory : MonoBehaviour
 
     public void ChangeItemSlot()
     {
-        if(itemInventory.Count > 0)
+        if(itemCount > 0)
         {
+            
             currentItemIndex = currentItemIndex + 1;
             if (currentItemIndex == 0 && items[0] != null)
             {
-                rightWeapon = items[currentItemIndex];
-                weaponSlotManager.LoadWeaponOnSlot(items[currentItemIndex], false);
+                Debug.Log("Here");
+                food = items[currentItemIndex];
+                weaponSlotManager.LoadFoodSlot(items[currentItemIndex]);
 
             }
             else if (currentItemIndex == 0 && items[0] == null)
             {
                 currentItemIndex++;
             }
-            else if (weaponsInventory.Count > 1)
+            else if (itemCount > 1)
             {
                 if (currentItemIndex == 1 && items[1] != null)
                 {
-                    rightWeapon = items[currentItemIndex];
-                    weaponSlotManager.LoadWeaponOnSlot(items[currentItemIndex], false);
+                    food = items[currentItemIndex];
+                    weaponSlotManager.LoadFoodSlot(items[currentItemIndex]);
                 }
                 else
                 {
@@ -71,11 +74,11 @@ public class PlayerInventory : MonoBehaviour
 
 
 
-            if (currentItemIndex > items.Count - 1)
+            if (currentItemIndex > itemCount - 1)
             {
                 currentItemIndex = -1;
-                rightWeapon = unarmedWeapon;
-                weaponSlotManager.LoadWeaponOnSlot(unarmedWeapon, false);
+                food = unarmedWeapon;
+                weaponSlotManager.LoadFoodSlot(unarmedWeapon);
             }
         }
     

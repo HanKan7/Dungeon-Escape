@@ -19,7 +19,7 @@ public class QuickSlotsUI : MonoBehaviour
             else
             {
                 rightWeaponIcon.sprite = null;
-                rightWeaponIcon.enabled = false; ;
+                rightWeaponIcon.enabled = false; 
             }
             
         }
@@ -35,6 +35,20 @@ public class QuickSlotsUI : MonoBehaviour
                 leftWeaponIcon.sprite = null;
                 leftWeaponIcon.enabled = false;
             }
+        }
+    }
+
+    public void UpdateFoodIcon(WeaponItem weapon)
+    {
+        if (weapon.itemIcon != null)
+        {
+            healthIcon.sprite = weapon.itemIcon;
+            healthIcon.enabled = true;
+        }
+        else
+        {
+            healthIcon.sprite = null;
+            healthIcon.enabled = false;
         }
     }
 }

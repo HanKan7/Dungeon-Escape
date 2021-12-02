@@ -71,6 +71,11 @@ public class WeaponSlotManager : MonoBehaviour
         }
     }
 
+    public void LoadFoodSlot(WeaponItem weapon)
+    {
+        quickSlotsUI.UpdateFoodIcon(weapon);
+    }
+
 
     #region HandleWeaponsDamageCollider
     void LoadLeftWeaponDamageCollider()

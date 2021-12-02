@@ -30,7 +30,9 @@ public class InputHandler : MonoBehaviour
     PlayerAttacker playerAttacker;
     PlayerInventory playerInventory;
     PlayerManager playerManager;
+    PlayerStats playerStats;
     UIManager uIManager;
+    WeaponSlotManager weaponSlotManager;
 
     Vector2 moveInput, cameraInput;
 
@@ -40,6 +42,8 @@ public class InputHandler : MonoBehaviour
         playerInventory = GetComponent<PlayerInventory>();
         playerManager = GetComponent<PlayerManager>();
         uIManager = FindObjectOfType<UIManager>();
+        playerStats = GetComponent<PlayerStats>();
+        weaponSlotManager = FindObjectOfType<WeaponSlotManager>();
     }
 
     public void OnEnable()
@@ -64,9 +68,11 @@ public class InputHandler : MonoBehaviour
         HandleRollInput(delta);
         HandleAttackInput(delta);
         HandleQuickSlotInput();
+        HandleFoodInput();
         HandleInteractableInput();
         HandleJumpInput();
         HandleInventoryInput();
+        HandleEatInput();
     }
 
     void MoveInput(float delta)
@@ -135,6 +141,39 @@ public class InputHandler : MonoBehaviour
         else if (left_Input)
         {
             playerInventory.ChangeLeftWeapon();
+        }
+    }
+
+    void HandleFoodInput()
+    {
+        inputActions.PlayerInventory.UpArrow.performed += i => up_Input = true;
+        inputActions.PlayerInventory.DownArrow.performed += i => down_Input = true;
+
+        if (up_Input)
+        {
+            playerInventory.ChangeItemSlot();
+        }
+        else if (down_Input)
+        {
+            playerInventory.ChangeItemSlot();
+        }
+    }
+    void HandleEatInput()
+    {
+        inputActions.PlayerActions.Jump.performed += i => jump_input = true;
+
+        if (jump_input)
+        {
+            if(playerInventory.itemInventory.Count > 0 && playerInventory.currentItemIndex != -1)
+            {
+
+                playerStats.GainHealth(playerInventory.items[playerInventory.currentItemIndex].baseStamina);
+                playerInventory.itemInventory.RemoveAt(playerInventory.currentItemIndex);
+                playerInventory.itemCount--;
+                playerInventory.currentItemIndex = -1;
+                playerInventory.food = playerInventory.unarmedWeapon;
+                weaponSlotManager.LoadFoodSlot(playerInventory.unarmedWeapon);
+            }
         }
     }
 

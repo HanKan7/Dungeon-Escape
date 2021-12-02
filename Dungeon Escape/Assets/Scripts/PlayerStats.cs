@@ -60,6 +60,17 @@ public class PlayerStats : MonoBehaviour
         }
     }
 
+    public void GainHealth(int health)
+    {
+        currentHealth = currentHealth + health;
+        healthBar.SetCurrentHealth(currentHealth);
+
+        if(currentHealth >= maxHealth)
+        {
+            currentHealth = maxHealth;
+        }
+    }
+
     public void TakeStaminaDamage(int damage)
     {
         currentStamina = currentStamina - damage;
