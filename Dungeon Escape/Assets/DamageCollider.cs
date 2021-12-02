@@ -15,7 +15,7 @@ public class DamageCollider : MonoBehaviour
         damageCollider = GetComponent<BoxCollider>();
         damageCollider.gameObject.SetActive(true);
         damageCollider.isTrigger = true;
-        //damageCollider.enabled = false;
+        damageCollider.enabled = false;
     }
 
     public void EnableDamageCollider()
@@ -25,7 +25,7 @@ public class DamageCollider : MonoBehaviour
 
     public void DisableDamageCollider()
     {
-        //damageCollider.enabled = false;
+        damageCollider.enabled = false;
     }
 
 

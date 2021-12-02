@@ -260,7 +260,7 @@ public class PlayerLocomotion : MonoBehaviour
                 //moveDirection.Normalize();
                 //moveDirection *= jumpSpeed;
                 GetComponent<Rigidbody>().AddForce(new Vector3(0, jumpSpeed * 100, 0) * Time.deltaTime);
-                capsuleCollider.center = new Vector3(0, 2f, 0);
+                //capsuleCollider.center = new Vector3(0, 2f, 0);
                 //transform.position = Vector3.Lerp(transform.position, transform.position + new Vector3(0, 2f, 0), 0.07f);
             }
         }

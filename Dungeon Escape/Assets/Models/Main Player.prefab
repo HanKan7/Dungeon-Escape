@@ -78,7 +78,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 2816503538048186958}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   m_Radius: 0.21
   m_Height: 1.5
   m_Direction: 1
@@ -123,6 +123,8 @@ MonoBehaviour:
   down_Input: 0
   left_Input: 0
   right_Input: 0
+  f_input: 0
+  jump_input: 0
   rollFlag: 0
   sprintFlag: 0
   comboFlag: 0
@@ -142,6 +144,7 @@ MonoBehaviour:
   moveDirection: {x: 0, y: 0, z: 0}
   myTransform: {fileID: 0}
   animatorHandler: {fileID: 0}
+  capsuleCollider: {fileID: 480666824}
   rigidBody: {fileID: 0}
   normalCamera: {fileID: 0}
   movementSpeed: 5
@@ -149,6 +152,7 @@ MonoBehaviour:
   sprintSpeed: 7
   walkSpeed: 1
   fallingSpeed: 45
+  jumpSpeed: 250
   minimumDistanceNeededToBeginFall: 0.6
   groundDirectionRayDistance: 0.2
   inAirTimer: 0
@@ -164,6 +168,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc75c6e874ea0564ba4af129d40a26f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactableLayer:
+    serializedVersion: 2
+    m_Bits: 65536
+  interactableUI: {fileID: 0}
+  interactableUiGameObject: {fileID: 0}
+  itemInteractableGameObject: {fileID: 0}
   isInteracting: 0
   isSprinting: 0
   isGrounded: 0
@@ -192,6 +202,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: cf2349b9d4fa99848a9fafd6f0853574, type: 2}
   currentRightWeaponIndex: -1
   currentLeftWeaponIndex: -1
+  weaponsInventory: []
 --- !u!114 &391655166
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -207,7 +218,11 @@ MonoBehaviour:
   healthLevel: 10
   maxHealth: 0
   currentHealth: 0
+  staminaLevel: 10
+  maxStamina: 0
+  currentStamina: 0
   healthBar: {fileID: 0}
+  staminaBar: {fileID: 0}
 --- !u!114 &391655173
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -332,6 +347,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d7282872c20dc94fb33baa64df03cf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackingWeapon: {fileID: 0}
 --- !u!114 &4408087690249370396
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -346,6 +362,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   anim: {fileID: 0}
   canRotate: 1
+--- !u!136 &480666824
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4407062063572602008}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.21
+  m_Height: 1.5
+  m_Direction: 1
+  m_Center: {x: 0, y: 1.1334027, z: 0}
 --- !u!114 &1983983526
 MonoBehaviour:
   m_ObjectHideFlags: 0
