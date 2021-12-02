@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78c0b9f3c228c9149a0d4fe4f050d3ae, type: 3}
   m_Name: Gold Sword
   m_EditorClassIdentifier: 
-  itemIcon: {fileID: 21300000, guid: 039f6e278d04a56488987081417be8d1, type: 3}
+  itemIcon: {fileID: 21300000, guid: 4b5d40f54d00859408290e1bde48b6cc, type: 3}
   itemName: Gold Sword
   modelPrefab: {fileID: 5406313201697388873, guid: 8a0de8d21d2bee64b917a410d9b27b86, type: 3}
   isUnarmed: 0
