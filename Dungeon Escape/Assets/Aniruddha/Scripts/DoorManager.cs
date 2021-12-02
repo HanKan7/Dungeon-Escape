@@ -7,16 +7,24 @@ public class DoorManager : MonoBehaviour
     public DoorData[] doors;
     public bool closeOnTrigger = true;
     public bool disabled = false;
+    public AudioClip doorCloseSound, doorOpenSound;
+    private AudioSource source;
 
+    private void Awake()
+    {
+        source = GetComponent<AudioSource>();
+    }
     public void DoorClose()
     {
         foreach (DoorData door in doors)
             door.t.rotation = Quaternion.Euler(door.closeAngle);
+        source.PlayOneShot(doorCloseSound);
     }
     public void DoorOpen()
     {
         foreach (DoorData door in doors)
             door.t.rotation = Quaternion.Euler(door.openAngle);
+        source.PlayOneShot(doorOpenSound);
     }
 
     private void OnTriggerEnter(Collider other)

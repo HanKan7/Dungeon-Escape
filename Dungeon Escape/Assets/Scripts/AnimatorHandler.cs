@@ -11,6 +11,8 @@ public class AnimatorHandler : MonoBehaviour
     int vertical, horizontal;
     public bool canRotate;
 
+    private CapsuleCollider capsuleCollider;
+
     public void Initialize()
     {
         playerManager = GetComponentInParent<PlayerManager>();
@@ -19,6 +21,7 @@ public class AnimatorHandler : MonoBehaviour
         playerLocomotion = GetComponentInParent<PlayerLocomotion>();
         vertical = Animator.StringToHash("Vertical");
         horizontal = Animator.StringToHash("Horizontal");
+        capsuleCollider = GetComponent<CapsuleCollider>();
     }
 
     public void UpdateAnimatorValues(float verticalMovement, float horizontalMovement, bool isSprinting)
@@ -120,5 +123,12 @@ public class AnimatorHandler : MonoBehaviour
     {
         anim.SetBool("canDoCombo", false);
     }
-
+    public void CapColliderOn()
+    {
+        Debug.Log("CapColliderOn");
+    }
+    public void CapColliderOff()
+    {
+        Debug.Log("CapColliderOff");
+    }
 }
