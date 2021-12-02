@@ -59,7 +59,7 @@ public class PlayerManager : MonoBehaviour
         inputHandler.TickInput(delta);
         playerLocomotion.HandleMovement(delta);
         playerLocomotion.HandleRollingAndSpriting(delta);
-        playerLocomotion.HandleJumping();
+        //playerLocomotion.HandleJumping();
         if (playerStats.currentHealth <= 0) return;
         //if (isInteracting) return;
         CheckForInteractable();
