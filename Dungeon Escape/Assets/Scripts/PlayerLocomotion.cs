@@ -247,7 +247,7 @@ public class PlayerLocomotion : MonoBehaviour
         if (playerManager.isInteracting) return;
         if (inputHandler.jump_input)
         {
-            //if(inputHandler.moveAmount > 0)
+            if(inputHandler.moveAmount > 0)
             {
                 moveDirection = cameraObject.forward * inputHandler.vertical;
                 moveDirection += cameraObject.right * inputHandler.horizontal;
@@ -259,7 +259,7 @@ public class PlayerLocomotion : MonoBehaviour
 
                 //moveDirection.Normalize();
                 //moveDirection *= jumpSpeed;
-                GetComponent<Rigidbody>().AddForce(new Vector3(0, jumpSpeed * 100, 0) * Time.deltaTime);
+                //GetComponent<Rigidbody>().AddForce(new Vector3(0, jumpSpeed * 100, 0) * Time.deltaTime);
                 //capsuleCollider.center = new Vector3(0, 2f, 0);
                 //transform.position = Vector3.Lerp(transform.position, transform.position + new Vector3(0, 2f, 0), 0.07f);
             }
