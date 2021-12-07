@@ -126,9 +126,11 @@ public class AnimatorHandler : MonoBehaviour
     public void CapColliderOn()
     {
         Debug.Log("CapColliderOn");
+        capsuleCollider.height = 2.2f;
     }
     public void CapColliderOff()
     {
         Debug.Log("CapColliderOff");
+        capsuleCollider.height = 1.5f;
     }
 }

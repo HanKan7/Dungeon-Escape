@@ -21,6 +21,20 @@ public class PlayerStats : MonoBehaviour
         animatorHandler = GetComponentInChildren<AnimatorHandler>();
     }
 
+    float lastTime = 1.0f;
+    float counter = 0;
+    private void Update()
+    {
+        counter += Time.deltaTime;
+        if(counter>lastTime)
+        {
+            if (currentHealth < maxHealth)
+                GainHealth(1);
+            lastTime = 1;
+            counter = 0;
+        }
+    }
+
     // Start is called before the first frame update
     void Start() 
     {
@@ -57,6 +71,7 @@ public class PlayerStats : MonoBehaviour
             currentHealth = 0;
             animatorHandler.PlayTargetAnimation("Death", true);
             //Handle Player Death
+            MenuManager.instance.ShowDeathUI();
         }
     }
 
@@ -75,5 +90,7 @@ public class PlayerStats : MonoBehaviour
     {
         currentStamina = currentStamina - damage;
         staminaBar.SetCurrentStamina(currentStamina);
+        lastTime = 10;
+        counter = 0;
     }
 }

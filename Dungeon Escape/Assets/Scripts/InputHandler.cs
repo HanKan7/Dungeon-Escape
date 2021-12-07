@@ -44,6 +44,7 @@ public class InputHandler : MonoBehaviour
         uIManager = FindObjectOfType<UIManager>();
         playerStats = GetComponent<PlayerStats>();
         weaponSlotManager = FindObjectOfType<WeaponSlotManager>();
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     public void OnEnable()
