@@ -12,6 +12,11 @@ public class AnimatorHandler : MonoBehaviour
     public bool canRotate;
 
     private CapsuleCollider capsuleCollider;
+    public AudioSource audioSource;
+    public AudioSource audioSource2;
+
+    public AudioClip swooshClip;
+    private bool is_Idle = true;
 
     public void Initialize()
     {
@@ -132,5 +137,25 @@ public class AnimatorHandler : MonoBehaviour
     {
         Debug.Log("CapColliderOff");
         capsuleCollider.height = 1.5f;
+    }
+    public void PlayFootStep()
+    {
+        is_Idle = false;
+    }
+    public void DisableFootStep()
+    {
+        is_Idle = true;
+    }
+    public void PlaySlashSound()
+    {
+        if(audioSource)
+        audioSource2.PlayOneShot(swooshClip);
+    }
+    private void Update()
+    {
+        if (!is_Idle && !audioSource.isPlaying)
+            audioSource.Play();
+        if (is_Idle && audioSource.isPlaying)
+            audioSource.Stop();
     }
 }
